@@ -17,8 +17,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 #install.packages("tseries")
 #install.packages("forecast")
+#install.packages("dplyr")
+#install.packages("haven")
+#install.packages("stringi")
 library(tidyverse)
-#library(forecast)
+
+library(forecast)
 library(tseries)
 
 truckee <- read_csv("truckee_flow_clean.csv")
@@ -57,8 +61,53 @@ truckee_hw <- HoltWinters(truckee_ts)
 truckee_hw
 plot(truckee_hw)
 
-truckee_forecast <- forecast(truckee_hw, h = 5)
-plot(truckee_forecast)
+truckee_forecast <- forecast(truckee_hw, h = 60)
+plot(truckee_forecast,
+     main = "Average Water Flow",
+     xlab = "Year",
+     ylab = "Monthly Mean Flow (cubic feet per second)")
+
+```
+
+#Figure 1: Monthly Mean Flow of the Truckee River (2000-2016). Time series data showing water flow in cubic feet per second. A Holt Winters function was used to forecast river flow from 2015 to 2020, and is shown with higher and lower bounds seen in the shaded areas. 
+
+##Residuals
+
+```{r}
+
+hist(truckee_forecast$residuals)
+
+```
+
+
+###Task 3: Mapping California's National Parks
+
+```{r}
+
+
+library(sf)
+library(tmap)
+library(leaflet)
+library(ggplot2)
+library(sp)
+library(ggrepel)
+library(ggspatial)
+library(RColorBrewer)
+library(raster)
+
+ca_counties <- read_sf(".", layer = "california_county_shape_file")
+st_crs(ca_counties) = 4326
+plot(ca_counties)
+
+ca_parks <- read_sf(".", layer = "nps_boundary (1)") 
+ 
+View(ca_parks)
+  
+
+
+
+
+
 
 ```
 
