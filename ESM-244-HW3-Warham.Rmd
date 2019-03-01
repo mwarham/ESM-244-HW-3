@@ -99,10 +99,42 @@ ca_counties <- read_sf(".", layer = "california_county_shape_file")
 st_crs(ca_counties) = 4326
 plot(ca_counties)
 
-ca_parks <- read_sf(".", layer = "nps_boundary (1)") 
+View(ca_counties)
+
+ca_parks <- read_sf(".", layer = "nps_boundary (1)") %>% 
+  dplyr::filter(STATE == "CA") %>% 
+  dplyr::filter(UNIT_TYPE == "National Park")
+
+st_crs(ca_parks) = 4326
  
 View(ca_parks)
   
+plot(ca_parks)
+
+np_coords <- do.call(rbind, st_geometry(ca_parks)) %>% 
+    as_tibble() %>% setNames(c("lon","lat"))
+
+View(np_coords)
+
+ca_geom <- st_geometry(ca_parks$geometry)
+View(ca_geom)
+
+color_count <- 7
+mycolors <- colorRampPalette(brewer.pal(10, "Set2"))(color_count)
+
+ggplot(ca_parks)+
+  scale_fill_manual(values = mycolors)+
+  geom_sf(data = ca_counties, fill = "lightskyblue1")+
+  geom_sf(aes(fill = UNIT_TYPE),
+              color = "red",
+              show.legend = FALSE)
+  #geom_text
+              #st_centroid(st_geometry(ca_parks$geometry), add = TRUE)) +
+  #st_coordinates()+
+  #st_centroid((ca_parks), add = TRUE, col = "red")+
+  #geom_label_repel(aes(x = lon, y = lat, label = UNIT_NAME))+
+  theme_light()
+      
 
 
 
