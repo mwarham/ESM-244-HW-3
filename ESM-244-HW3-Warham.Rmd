@@ -1,0 +1,64 @@
+---
+title: "ESM-244-HW3-Warham"
+author: "Matthew Warham"
+date: "March 1, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+###Task 2: Truckee River Flow (2000-2016)
+
+##Part a. Time Series Graph
+
+```{r}
+
+#install.packages("tseries")
+#install.packages("forecast")
+library(tidyverse)
+#library(forecast)
+library(tseries)
+
+truckee <- read_csv("truckee_flow_clean.csv")
+
+View(truckee)
+
+```
+
+```{r}
+
+truckee_ts <- ts(truckee$`Monthly Mean Value`, frequency = 12, start = c(2000,1))
+
+truckee_ts
+
+plot(truckee_ts)
+
+```
+
+
+# Decomposed ts
+```{r}
+
+truckee_dc <- decompose(truckee_ts)
+plot(truckee_dc)
+
+```
+
+# This data does not appear to be additive or multiplicative. This data appears to be stationary because the mean of the trend data seems to be stationary over time. There is definite seasonality in the data, as the water flow peaks once every year probably after the snow melt in spring. There is somewhat of a cyclical trend every 5 or so years.
+
+## Part b: Holt Winters
+
+
+```{r}
+
+truckee_hw <- HoltWinters(truckee_ts)
+truckee_hw
+plot(truckee_hw)
+
+truckee_forecast <- forecast(truckee_hw, h = 5)
+plot(truckee_forecast)
+
+```
+
