@@ -99,9 +99,11 @@ ca_counties <- read_sf(".", layer = "california_county_shape_file")
 st_crs(ca_counties) = 4326
 plot(ca_counties)
 
-ca_parks <- read_sf(".", layer = "nps_boundary (1)") 
+ca_parks2 <- read_sf(".", layer = "nps_boundary")  
+  filter(STATE == "CA") %>% 
+  filter(UNIT_TYPE == "National Parks")
  
-View(ca_parks)
+View(ca_parks2)
   
 
 
