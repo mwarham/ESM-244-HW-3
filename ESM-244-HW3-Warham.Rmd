@@ -99,21 +99,21 @@ ca_counties <- read_sf(".", layer = "california_county_shape_file")
 st_crs(ca_counties) = 4326
 plot(ca_counties)
 
-<<<<<<< HEAD
-ca_parks2 <- read_sf(".", layer = "nps_boundary")  
+
+ca_parks2 <- read_sf(".", layer = "nps_boundary") %>%  
   filter(STATE == "CA") %>% 
   filter(UNIT_TYPE == "National Parks")
-=======
+
 View(ca_counties)
 
-ca_parks <- read_sf(".", layer = "nps_boundary (1)") %>% 
+ca_parks <- read_sf(".", layer = "nps_boundary") %>% 
   dplyr::filter(STATE == "CA") %>% 
   dplyr::filter(UNIT_TYPE == "National Park")
 
 st_crs(ca_parks) = 4326
->>>>>>> cb9060146b7db9f2e9fffdf5eda5ee63edbc010b
+
  
-View(ca_parks2)
+View(ca_parks)
   
 plot(ca_parks)
 
@@ -146,6 +146,52 @@ ggplot(ca_parks)+
 
 
 
+
+```
+
+###Task 4: Lizards
+
+```{r}
+
+library(ggplot2)
+library(pwr)
+library(effsize)
+
+lizard <- read_csv("lter_lizard_pitfall.csv") %>% 
+  dplyr::filter(Site == "CALI") %>% 
+  dplyr::filter(Sex %in% c("M", "F")) %>% 
+  dplyr::filter(Weight != ".") %>% 
+  dplyr::filter(TailBreak != ".")
+
+View(lizard)
+
+Male <- lizard %>%
+  filter(Sex == "M") %>% 
+  dplyr::select(Weight)
+
+M <- Male$Weight
+
+
+View(M)
+
+Female <- lizard %>% 
+  filter(Sex == "F") %>% 
+  dplyr::select(Weight)
+
+Fe <- Female$Weight
+
+View(Fe)
+
+View(Female)
+  
+f_test <- var.test(M,Fe)
+f_test
+
+t_test <- t.test(M, Fe,var.equal = TRUE)
+t.test
+
+chisq <- chisq.test(lizard)
+chisq
 
 ```
 
