@@ -100,15 +100,15 @@ st_crs(ca_counties) = 4326
 plot(ca_counties)
 
 
-ca_parks2 <- read_sf(".", layer = "nps_boundary") %>%  
-  filter(STATE == "CA") %>% 
-  filter(UNIT_TYPE == "National Parks")
-
 View(ca_counties)
+
+
 
 ca_parks <- read_sf(".", layer = "nps_boundary") %>% 
   dplyr::filter(STATE == "CA") %>% 
-  dplyr::filter(UNIT_TYPE == "National Park")
+  dplyr::filter(UNIT_TYPE == "National Park") %>% 
+  mutate(lon=map_dbl(geometry, ~st_centroid(.x)[[1]]),
+         lat=map_dbl(geometry, ~st_centroid(.x)[[2]]))
 
 st_crs(ca_parks) = 4326
 
@@ -125,22 +125,41 @@ View(np_coords)
 ca_geom <- st_geometry(ca_parks$geometry)
 View(ca_geom)
 
-color_count <- 7
-mycolors <- colorRampPalette(brewer.pal(10, "Set2"))(color_count)
 
-ggplot(ca_parks)+
-  scale_fill_manual(values = mycolors)+
-  geom_sf(data = ca_counties, fill = "lightskyblue1")+
-  geom_sf(aes(fill = UNIT_TYPE),
-              color = "red",
-              show.legend = FALSE)
+
+color_count <- 9
+mycolors <- colorRampPalette(brewer.pal(10, "Dark2"))(color_count)
+
+
+ggplot(ca_counties)+
+  geom_sf(fill = "azure1",
+          color = "gray30",
+          size = 0.1) +
+  geom_sf(data = ca_parks, 
+          aes(fill = UNIT_NAME),
+          color = "NA",
+          show.legend = FALSE)+
+  geom_label_repel(data = ca_parks, aes(x=lon, y = lat, label = UNIT_NAME),
+                   box.padding = 1,
+                   #force = 1,
+                  point.padding = 0.75,
+                  alpha = 0.75,
+                  fontface = 'bold', 
+                  color = 'black')+
+  scale_fill_manual(values = mycolors) +
+  theme(panel.grid.major = element_line(color = "transparent"), 
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(), 
+        axis.line = element_blank())+
+  ggtitle("California National Parks")
+
   #geom_text
               #st_centroid(st_geometry(ca_parks$geometry), add = TRUE)) +
   #st_coordinates()+
   #st_centroid((ca_parks), add = TRUE, col = "red")+
   #geom_label_repel(aes(x = lon, y = lat, label = UNIT_NAME))+
-  theme_light()
-      
+  
+    
 
 
 
@@ -157,6 +176,9 @@ library(ggplot2)
 library(pwr)
 library(effsize)
 
+
+## Data wrangling 
+
 lizard <- read_csv("lter_lizard_pitfall.csv") %>% 
   dplyr::filter(Site == "CALI") %>% 
   dplyr::filter(Sex %in% c("M", "F")) %>% 
@@ -169,29 +191,67 @@ Male <- lizard %>%
   filter(Sex == "M") %>% 
   dplyr::select(Weight)
 
-M <- Male$Weight
+M <- Male$Weight %>% 
+as.numeric(Male$Weight)
 
+class(M)
 
 View(M)
+
+
 
 Female <- lizard %>% 
   filter(Sex == "F") %>% 
   dplyr::select(Weight)
 
-Fe <- Female$Weight
+Fe <- Female$Weight %>% 
+  as.numeric(Female$Weight)
+
+class(Fe)
 
 View(Fe)
 
-View(Female)
+par(mfrow = c(2,2))
+hist(M)
+qqnorm(M)
+hist(Fe)
+qqnorm(Fe)
+
+## T test
   
-f_test <- var.test(M,Fe)
-f_test
 
-t_test <- t.test(M, Fe,var.equal = TRUE)
-t.test
+t_test <- t.test(M, Fe)
+t_test
 
-chisq <- chisq.test(lizard)
+# According the two sample t test, the average weight of males was 5.09 grams (n=55) and the average weight of females was 5.82 grams (n= 75). Mean weights are not significantly different t(123) = -0.6825, p value = 0.4962 
+
+## Chi Sq test for tail breaks
+
+tab1 <- table(lizard$Sex, lizard$TailBreak)
+tab1
+
+prop.table(tab1)
+
+tails <- lizard %>% 
+  dplyr::select(c("Sex", "TailBreak")) 
+
+View(tails)
+  
+  
+
+chisq <- chisq.test(tails)
 chisq
+
+# There is not a significant difference in proportions chisq(1) = 0.16319, p value = 0.6862
+
+male_broken <- 10/55 #0.182
+female_broken <- 17/75 #0.223
+
+#Proportions of broken tails
+#Males = 10/55
+#Females = 17/75
+
+#No significant proportion of males (0.182) and females (0.23) with broken tails
 
 ```
 
