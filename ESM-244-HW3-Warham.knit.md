@@ -2,10 +2,22 @@
 title: "ESM-244-HW3-Warham"
 author: "Matthew Warham"
 date: "March 1, 2019"
-output: html_document
+output:
+  html_document: default
+  word_document: default
 ---
 
 
+
+###Part 1
+
+When thinking about science as a collaborative effort to advance what humankind knows about the world around us, open access data is crucial to the transparency and accountability of science. In order to benefit the maximum number of people science should be available to anyone to contribute to. Today many academics are driven by the incentive to publish research constantly, either by financial compensation or academic advancement and tenure. This practice has driven researchers to constantly publish their results first before competitors. In actuality, it has been shown that open access publications receive more citations and further the credibility of researchers than previous non-open access publications (McKiernan et al. 2016). More people have access to the results and the information can therefore be more widely distributed
+
+However, open access of data can provide benefits to everyone by allowing for collaboration and further advancement of the field. In actuality, it has been shown that open access publications also get more media coverage and open access journals are approaching the same impact factors of paid subscription journals. (McKiernan et al. 2016). This transition towards collaborative science has brought about the rise of many tools that researchers can use to make their data accessible. The advancement of technology has allowed this emergence of open access science and the internet allows for large amounts of data to be shared globally by everyone (Bahlai et al. 2019). Even governments are making strides in making information in the form of public repositories and servers. This has lead to increased transparency between citizens and government entities. Furthermore, in the past publishing data has typically forfeited the rights of the author to publishers who use the data and results for their publication purposes. In open access scenarios, authors retain more ownership than historical publications.  In order for open science to work information must flow both ways. If you are accessing available data in order to complete your work, it should be standard procedure that your data become public and available. If everyone accessed free data but refused to follow through and make their results public, it sort of defeats the purpose. 
+
+There are still issues that prohibit everyone from equally accessing open sourced data. Financial barriers and social barriers make it impossible sometimes for everyone to participate (Bahlai et al. 2019). Publication costs are often high for smaller institutions often inhibit progress made. Also, social structure stigma has also inhibited growth of open access science. Some may feel insecure about commenting or providing critical comments about a senior researchers work, in fear of retribution, even though their comments may be useful towards the progress of the science. 
+
+In the past year at Bren my knowledge of open access science has zone from essentially zero to trying to ensure all of my work is available if applicable. Tools like gitHub have enabled students like me to easily replicate and share work. Especially on group projects where code scripts are collaborative and everyone can make real time changes and instantly upload to the internet for others to see. Some limitations to my approach to maintaining open access practices have definitely been more on the technical side of things. Before Bren I had no idea what R or github was. There was a steep learning curve for me to even reach the point where I can make any work that I do accessible to the public or my colleagues. I can see this a deterrent to many people if they want to share their data or results. After a year at Bren (and especially this class) I can say I am comfortable producing results and data that could be replicated or used by other parties for further investigation of my work. Specifically for our group project, we are really striving to make our results accessible because we believe the implications of our research can have wide reaching benefits if the scientific community has access to it. 
 
 ###Task 2: Truckee River Flow (2000-2016)
 
@@ -89,15 +101,6 @@ truckee <- read_csv("truckee_flow_clean.csv")
 ```
 
 
-```r
-#When thinking about science as a collaborative effort to advance what humankind knows about the world around us, open access data is crucial to the transparency and accountability of science. In order to benefit the maximum number of people science should be available to anyone to contribute to. Today many academics are driven by the incentive to publish research constantly, either by financial compensation or academic advancement and tenure. This practice has driven researchers to constantly publish their results first before competitors. In actuality, it has been shown that open access publications receive more citations and further the credibility of researchers than previous non-open access publications (McKiernan et al. 2016). More people have access to the results and the information can therefore be more widely distributed
-
-#However, open access of data can provide benefits to everyone by allowing for collaboration and further advancement of the field. In actuality, it has been shown that open access publications also get more media coverage and open access journals are approaching the same impact factors of paid subscription journals. (McKiernan et al. 2016). This transition towards collaborative science has brought about the rise of many tools that researchers can use to make their data accessible. The advancement of technology has allowed this emergence of open access science and the internet allows for large amounts of data to be shared globally by everyone (Bahlai et al. 2019). Even governments are making strides in making information in the form of public repositories and servers. This has lead to increased transparency between citizens and government entities. Furthermore, in the past publishing data has typically forfeited the rights of the author to publishers who use the data and results for their publication purposes. In open access scenarios, authors retain more ownership than historical publications.  In order for open science to work information must flow both ways. If you are accessing available data in order to complete your work, it should be standard procedure that your data become public and available. If everyone accessed free data but refused to follow through and make their results public, it sort of defeats the purpose. 
-
-#There are still issues that prohibit everyone from equally accessing open sourced data. Financial barriers and social barriers make it impossible sometimes for everyone to participate (Bahlai et al. 2019). Publication costs are often high for smaller institutions often inhibit progress made. Also, social structure stigma has also inhibited growth of open access science. Some may feel insecure about commenting or providing critical comments about a senior researchers work, in fear of retribution, even though their comments may be useful towards the progress of the science. 
-
-#In the past year at Bren my knowledge of open access science has zone from essentially zero to trying to ensure all of my work is available if applicable. Tools like gitHub have enabled students like me to easily replicate and share work. Especially on group projects where code scripts are collaborative and everyone can make real time changes and instantly upload to the internet for others to see. Some limitations to my approach to maintaining open access practices have definitely been more on the technical side of things. Before Bren I had no idea what R or github was. There was a steep learning curve for me to even reach the point where I can make any work that I do accessible to the public or my colleagues. I can see this a deterrent to many people if they want to share their data or results. After a year at Bren (and especially this class) I can say I am comfortable producing results and data that could be replicated or used by other parties for further investigation of my work. Specifically for our group project, we are really striving to make our results accessible because we believe the implications of our research can have wide reaching benefits if the scientific community has access to it. 
-```
 
 
 
@@ -150,7 +153,7 @@ truckee_ts
 plot(truckee_ts)
 ```
 
-<img src="ESM-244-HW3-Warham_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+<img src="ESM-244-HW3-Warham_files/figure-html/unnamed-chunk-2-1.png" width="672" />
 
 
 # Decomposed ts
@@ -160,7 +163,7 @@ truckee_dc <- decompose(truckee_ts)
 plot(truckee_dc)
 ```
 
-<img src="ESM-244-HW3-Warham_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+<img src="ESM-244-HW3-Warham_files/figure-html/unnamed-chunk-3-1.png" width="672" />
 
 # This data does not appear to be additive or multiplicative. This data appears to be stationary because the mean of the trend data seems to be stationary over time. There is definite seasonality in the data, as the water flow peaks once every year probably after the snow melt in spring. There is somewhat of a cyclical trend every 5 or so years.
 
@@ -206,7 +209,7 @@ truckee_hw
 plot(truckee_hw)
 ```
 
-<img src="ESM-244-HW3-Warham_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+<img src="ESM-244-HW3-Warham_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
 ```r
 truckee_forecast <- forecast(truckee_hw, h = 60)
@@ -216,7 +219,7 @@ plot(truckee_forecast,
      ylab = "Monthly Mean Flow (cubic feet per second)")
 ```
 
-<img src="ESM-244-HW3-Warham_files/figure-html/unnamed-chunk-5-2.png" width="672" />
+<img src="ESM-244-HW3-Warham_files/figure-html/unnamed-chunk-4-2.png" width="672" />
 
 #Figure 1: Monthly Mean Flow of the Truckee River (2000-2016). Time series data showing water flow in cubic feet per second. A Holt Winters function was used to forecast river flow from 2015 to 2020, and is shown with higher and lower bounds seen in the shaded areas. 
 
@@ -227,7 +230,7 @@ plot(truckee_forecast,
 hist(truckee_forecast$residuals)
 ```
 
-<img src="ESM-244-HW3-Warham_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<img src="ESM-244-HW3-Warham_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 
 
 ###Task 3: Mapping California's National Parks
@@ -240,7 +243,7 @@ st_crs(ca_counties) = 4326
 plot(ca_counties)
 ```
 
-<img src="ESM-244-HW3-Warham_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<img src="ESM-244-HW3-Warham_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
 ```r
 #View(ca_counties)
@@ -300,7 +303,7 @@ ggplot(ca_counties)+
   ggtitle("California National Parks")
 ```
 
-<img src="ESM-244-HW3-Warham_files/figure-html/unnamed-chunk-7-2.png" width="672" />
+<img src="ESM-244-HW3-Warham_files/figure-html/unnamed-chunk-6-2.png" width="672" />
 
 ###Task 4: Lizards
 
@@ -377,7 +380,7 @@ hist(Fe)
 qqnorm(Fe)
 ```
 
-<img src="ESM-244-HW3-Warham_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+<img src="ESM-244-HW3-Warham_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 
 ```r
 ## T test
